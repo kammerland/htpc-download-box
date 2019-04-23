@@ -111,3 +111,30 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${ROOT}/config/tautulli:/config # config files
       - ${ROOT}/config/tautulli/logs:/logs # log files
+
+ portainer:
+    container_name: portainer
+    image: portainer/portainer:latest
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    network_mode: host
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - ${ROOT}/config/portainer:/data # portainer_data
+
+  organizr:
+    container_name: organizr
+    image: linuxserver/organizr:latest
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - 9983:80 # Redirect to port 80 for outside access
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - ${ROOT}/config/organizr:/config # config files
