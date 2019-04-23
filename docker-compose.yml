@@ -14,7 +14,7 @@ services:
       - label:disable
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
-    command: '-f "" -r 192.168.9.0/24' # enable firewall and route local network traffic
+    command: '-f "" -r 192.168.0.0/16' # enable firewall and route local network traffic
 
   deluge:
     container_name: deluge
@@ -97,3 +97,17 @@ services:
       - ${ROOT}/config/plex/db:/config # plex database
       - ${ROOT}/config/plex/transcode:/transcode # temp transcoded files
       - ${ROOT}/complete:/data # media library
+
+  tautulli:
+    container_name: tautulli
+    image: linuxserver/tautulli:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${ROOT}/config/tautulli:/config # config files
+      - ${ROOT}/config/tautulli/logs:/logs # log files
