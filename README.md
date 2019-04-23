@@ -725,9 +725,7 @@ UNDER CONSTRUCTION
 
 #### Docker container
 
-Guess who made a nice Sonarr Docker image? Linuxserver.io !
-
-Let's go:
+Linuxserver.io has a great Organizr image (of course they do)...
 
 ```yaml
   organizr:
