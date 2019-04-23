@@ -1,6 +1,6 @@
 # HTPC Download Box
 
-Sonarr / Radarr / Jackett / NZBGet / Deluge / OpenVPN / Plex
+Sonarr / Radarr / Jackett / NZBGet / Deluge / OpenVPN / Plex / Organizr / Portainer
 
 TV shows and movies download, sort, with the desired quality and subtitles, behind a VPN (optional), ready to watch, in a beautiful media player.
 All automated.
@@ -46,6 +46,10 @@ All automated.
       - [Configuration](#configuration)
       - [Give it a try](#give-it-a-try)
       - [Movie discovering](#movie-discovering)
+    - [Setup Organizr](#setup-organizr)
+      - [Docker container](#docker-container)
+      - [Configuration](#configuration)
+      - [Give it a try](#give-it-a-try)
   - [Manage it all from your mobile](#manage-it-all-from-your-mobile)
   - [Going Further](#going-further)
 
@@ -715,6 +719,37 @@ This can be set up in `Settings/Lists`. I activated the following lists:
 - Trakt Lists Trending and Popular movies
 
 I disabled automatic sync for these lists: I want them to show when I add a new movie, but I don't want every item of these lists to be automatically synced with my movie library.
+
+### Setup Organizr
+UNDER CONSTRUCTION
+
+#### Docker container
+
+Guess who made a nice Sonarr Docker image? Linuxserver.io !
+
+Let's go:
+
+```yaml
+  organizr:
+    container_name: organizr
+    image: linuxserver/organizr:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+     volumes:
+      - ${ROOT}/config/organizr:/config # config files
+```
+
+`docker-compose up -d`
+
+Organizr web UI listens on port 80 by default. 
+
+#### Configuration
+
+#### Give it a try
 
 ## Manage it all from your mobile
 
